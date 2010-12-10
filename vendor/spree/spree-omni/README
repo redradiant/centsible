@@ -1,0 +1,12 @@
+Hello
+
+1.for installation add to Gemfile
+  gem "spree_omni", :require => "spree_omni", :path => "spree_omni"
+2. and checkout repo in project path git clone git://github.com/pronix/spree-omni.git
+3.install migration and assets 
+rake spree_omni:install
+4. rake db:migrate
+5. edit config/initializers/omniauth.rb
+
+If you want add or remove button - please edit this page app/views/shared/_social_auth.html.erb
+

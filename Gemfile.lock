@@ -1,0 +1,473 @@
+GIT
+  remote: git://github.com/sferik/rails_admin.git
+  revision: 8ab4a13e66c918afcc5e85e5f1fb2ffdeb0cb039
+  specs:
+    rails_admin (0.0.1)
+      builder (~> 2.1.0)
+      rails (~> 3.0.3)
+
+GIT
+  remote: git@github.com:redradiant/suppress_validations.git
+  revision: 6ff10238cd1965d7cf12c9cd7c4e6cc5f21fbc2a
+  specs:
+    suppress_validations (0.0.1)
+
+GIT
+  remote: https://github.com/joshnuss/spree-contact-form.git
+  revision: 699cfea6ab5151e257b1b4a7add8de93b89e2b2f
+  specs:
+    spree_contact_form (3.0.2)
+      spree_core (>= 0.30.1)
+
+GIT
+  remote: https://github.com/joshnuss/spree-testimonials.git
+  revision: c5722890b22125bab918b1d2cb9ed5bde544f27b
+  specs:
+    spree_testimonials (3.0.2)
+      spree_core (>= 0.30.1)
+
+GIT
+  remote: https://tomash@github.com/tomash/globalize-spree.git
+  revision: 9560f9f7d7e35082ff395776e9a1d02daa9b7ffe
+  specs:
+    globalize_spree (0.2.0)
+      globalize3 (>= 0.0.9)
+      i18n (>= 0.4.2)
+      spree_core (>= 0.30.0.beta2)
+
+PATH
+  remote: vendor/spree/spree_social
+  specs:
+    spree_social (1.0.0)
+      devise (= 1.2.rc)
+      oa-oauth (>= 0.1.6)
+      spree_auth (>= 0.40.0)
+      spree_core (>= 0.40.0)
+
+PATH
+  remote: vendor/spree_edge
+  specs:
+    spree (0.40.99)
+      spree_api (= 0.40.99)
+      spree_auth (= 0.40.99)
+      spree_core (= 0.40.99)
+      spree_dash (= 0.40.99)
+      spree_promo (= 0.40.99)
+      spree_sample (= 0.40.99)
+    spree_api (0.40.99)
+      spree_core (= 0.40.99)
+    spree_auth (0.40.99)
+      cancan (>= 1.3.3)
+      devise (= 1.2.rc)
+      spree_core (= 0.40.99)
+    spree_core (0.40.99)
+      activemerchant (>= 1.7.1)
+      acts_as_list (>= 0.1.2)
+      faker (>= 0.3.1)
+      highline (>= 1.5.1)
+      jquery-rails (>= 0.2.2)
+      paperclip (>= 2.3.1.1)
+      rails (>= 3.0.1)
+      rd_awesome_nested_set (>= 1.4.4)
+      rd_resource_controller
+      rd_searchlogic (>= 3.0.0.rc3)
+      rd_unobtrusive_date_picker (>= 0.1.0)
+      state_machine (>= 0.9.4)
+      stringex (>= 1.0.3)
+      will_paginate (>= 3.0.pre)
+    spree_dash (0.40.99)
+      spree_core (= 0.40.99)
+    spree_promo (0.40.99)
+      spree_core (= 0.40.99)
+    spree_sample (0.40.99)
+      spree_core (= 0.40.99)
+
+GEM
+  remote: http://gems.github.com/
+  remote: http://rubygems.org/
+  specs:
+    Platform (0.4.0)
+    ZenTest (4.4.1)
+    abstract (1.0.0)
+    actionmailer (3.0.3)
+      actionpack (= 3.0.3)
+      mail (~> 2.2.9)
+    actionpack (3.0.3)
+      activemodel (= 3.0.3)
+      activesupport (= 3.0.3)
+      builder (~> 2.1.2)
+      erubis (~> 2.6.6)
+      i18n (~> 0.4)
+      rack (~> 1.2.1)
+      rack-mount (~> 0.6.13)
+      rack-test (~> 0.5.6)
+      tzinfo (~> 0.3.23)
+    activemerchant (1.9.2)
+      activesupport (>= 2.3.2)
+      braintree (>= 2.0.0)
+      builder (>= 2.0.0)
+    activemodel (3.0.3)
+      activesupport (= 3.0.3)
+      builder (~> 2.1.2)
+      i18n (~> 0.4)
+    activerecord (3.0.3)
+      activemodel (= 3.0.3)
+      activesupport (= 3.0.3)
+      arel (~> 2.0.2)
+      tzinfo (~> 0.3.23)
+    activeresource (3.0.3)
+      activemodel (= 3.0.3)
+      activesupport (= 3.0.3)
+    activesupport (3.0.3)
+    acts_as_list (0.1.2)
+    addressable (2.2.2)
+    alter-ego (1.0.1)
+      fail-fast (~> 1.1.0)
+      hookr (~> 1.0.0)
+    archive-tar-minitar (0.5.2)
+    arel (2.0.6)
+    arrayfields (4.7.4)
+    arspy (0.0.8)
+      awesome_print (>= 0.1.4)
+    asin (0.0.8)
+      crack (>= 0.1.0)
+      hashie (>= 0.2.0)
+      httpclient (>= 2.1.0)
+    autotest (4.4.6)
+      ZenTest (>= 4.4.1)
+    awesome_print (0.3.1)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
+    bcrypt-ruby (2.1.2)
+    bj (1.0.1)
+      main (>= 2.6.0)
+      orderedhash (>= 0.0.3)
+      systemu (>= 1.2.0)
+    braintree (2.6.2)
+      builder
+    builder (2.1.2)
+    cancan (1.4.1)
+    capybara (0.4.0)
+      celerity (>= 0.7.9)
+      culerity (>= 0.2.4)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (>= 0.0.27)
+      xpath (~> 0.1.2)
+    celerity (0.8.5)
+    childprocess (0.1.4)
+      ffi (~> 0.6.3)
+    colored (1.2)
+    columnize (0.3.2)
+    configuration (1.2.0)
+    crack (0.1.8)
+    cucumber (0.10.0)
+      builder (>= 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.3.2)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
+    culerity (0.2.12)
+    daemons (1.1.0)
+    database_cleaner (0.6.0)
+    default_value_for (1.0.1)
+    devise (1.2.rc)
+      bcrypt-ruby (~> 2.1.2)
+      orm_adapter (~> 0.0.2)
+      warden (~> 1.0.2)
+    diff-lcs (1.1.2)
+    differ (0.1.1)
+    echoe (4.3.1)
+      gemcutter
+      rubyforge
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
+    eventmachine (0.12.10)
+    fabrication (0.9.4)
+    fail-fast (1.1.0)
+    faker (0.3.1)
+    fakeweb (1.3.0)
+    faraday (0.5.3)
+      addressable (~> 2.2.2)
+      multipart-post (~> 1.0.1)
+      rack (>= 1.1.0, < 2)
+    fattr (2.2.0)
+    fbgraph (1.5.2)
+      activesupport
+      activesupport
+      bundler
+      bundler
+      echoe
+      echoe
+      fakeweb
+      fakeweb
+      hashie
+      hashie
+      jeweler
+      jeweler
+      json
+      json
+      oauth2
+      oauth2
+      rake
+      rake
+      rcov
+      rcov
+      redgreen
+      redgreen
+      rest-client
+      rest-client
+      rspec
+      rspec
+    ffi (0.6.3)
+      rake (>= 0.8.7)
+    forgery (0.3.6)
+    gemcutter (0.6.1)
+    geokit (1.5.0)
+    geokit-rails3 (0.1.2)
+      geokit (~> 1.5.0)
+      rails (~> 3.0.0)
+    gherkin (2.3.2)
+      json (~> 1.4.6)
+      term-ansicolor (~> 1.0.5)
+    git (1.2.5)
+    globalize3 (0.0.10)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+    haml (3.0.24)
+    has_scope (0.5.0)
+    hashie (0.4.0)
+    highline (1.6.1)
+    hookr (1.0.1)
+      fail-fast (>= 1.0.0)
+    httpclient (2.1.5.2)
+    i18n (0.5.0)
+    inherited_resources (1.1.2)
+      has_scope (~> 0.5.0)
+      responders (~> 0.6.0)
+    isolate (2.1.2)
+    isolate-scenarios (0.1.1)
+      isolate (~> 2.1.2)
+      thor (~> 0.14.0)
+    jeweler (1.5.1)
+      bundler (~> 1.0.0)
+      git (>= 1.2.5)
+      rake
+    jquery-rails (0.2.6)
+      rails (~> 3.0)
+      thor (~> 0.14.4)
+    json (1.4.6)
+    json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    linecache (0.43)
+    linecache19 (0.5.11)
+      ruby_core_source (>= 0.1.4)
+    machinist (2.0.0.beta2)
+    mail (2.2.12)
+      activesupport (>= 2.3.6)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    main (4.4.0)
+      arrayfields (>= 4.7.4)
+      fattr (>= 2.1.0)
+    mechanize (1.0.0)
+      nokogiri (>= 1.2.1)
+    mime-types (1.16)
+    multi_json (0.0.5)
+    multipart-post (1.0.1)
+    nifty-generators (0.4.2)
+    nokogiri (1.4.4)
+    oa-core (0.1.6)
+      rack (~> 1.1)
+    oa-oauth (0.1.6)
+      multi_json (~> 0.0.2)
+      nokogiri (~> 1.4.2)
+      oa-core (= 0.1.6)
+      oauth (~> 0.4.0)
+      oauth2 (~> 0.1.0)
+    oauth (0.4.4)
+    oauth2 (0.1.0)
+      faraday (~> 0.5.0)
+      multi_json (~> 0.0.4)
+    orderedhash (0.0.6)
+    orm_adapter (0.0.3)
+    paperclip (2.3.6)
+      activerecord
+      activesupport
+    pg (0.10.0)
+    polyglot (0.3.1)
+    rack (1.2.1)
+    rack-mount (0.6.13)
+      rack (>= 1.0.0)
+    rack-test (0.5.6)
+      rack (>= 1.0)
+    rails (3.0.3)
+      actionmailer (= 3.0.3)
+      actionpack (= 3.0.3)
+      activerecord (= 3.0.3)
+      activeresource (= 3.0.3)
+      activesupport (= 3.0.3)
+      bundler (~> 1.0)
+      railties (= 3.0.3)
+    rails3-generators (0.14.0)
+    railties (3.0.3)
+      actionpack (= 3.0.3)
+      activesupport (= 3.0.3)
+      rake (>= 0.8.7)
+      thor (~> 0.14.4)
+    rake (0.8.7)
+    random_data (1.5.2)
+    rcov (0.9.9)
+    rd_awesome_nested_set (1.4.4)
+      activerecord (>= 1.1)
+    rd_resource_controller (1.0.0)
+    rd_searchlogic (3.0.0.rc4)
+      activerecord (>= 3.0.0)
+    rd_unobtrusive_date_picker (0.1.0)
+    rdiscount (1.6.5)
+    redgreen (1.2.2)
+    responders (0.6.2)
+    rest-client (1.6.1)
+      mime-types (>= 1.16)
+    role_model (0.6.0)
+    rspec (2.1.0)
+      rspec-core (~> 2.1.0)
+      rspec-expectations (~> 2.1.0)
+      rspec-mocks (~> 2.1.0)
+    rspec-core (2.1.0)
+    rspec-expectations (2.1.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.1.0)
+    rspec-rails (2.1.0)
+      rspec (~> 2.1.0)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
+      linecache (>= 0.3)
+    ruby-debug-base19 (0.11.24)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby-graphviz (0.9.20)
+    ruby_core_source (0.1.4)
+      archive-tar-minitar (>= 0.5.2)
+    rubyforge (2.0.4)
+      json_pure (>= 1.1.7)
+    rubyzip (0.9.4)
+    seed-fu (2.0.1)
+      activerecord (~> 3.0.0)
+    selenium-webdriver (0.1.1)
+      childprocess (= 0.1.4)
+      ffi (~> 0.6.3)
+      json_pure
+      rubyzip
+    sham (0.2.0)
+    shiny (0.3.1)
+    spork (0.8.4)
+    state_machine (0.9.4)
+    stringex (1.2.0)
+    systemu (1.2.0)
+    term-ansicolor (1.0.5)
+    thin (1.2.7)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
+    thor (0.14.6)
+    treetop (1.4.9)
+      polyglot (>= 0.3.1)
+    tzinfo (0.3.23)
+    utility_belt (1.1.0)
+      Platform (>= 0.4.0)
+      aws-s3 (>= 0.4.0)
+      wirble (>= 0.1.2)
+    warden (1.0.2)
+      rack (>= 1.0.0)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+    will_paginate (3.0.pre2)
+    wirble (0.1.3)
+    xml-simple (1.0.12)
+    xpath (0.1.2)
+      nokogiri (~> 1.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ZenTest
+  activemerchant
+  alter-ego
+  arspy
+  asin
+  autotest
+  awesome_print
+  aws-s3
+  bj
+  capybara
+  colored
+  cucumber
+  cucumber-rails
+  database_cleaner
+  default_value_for
+  differ
+  fabrication
+  faker
+  fbgraph
+  forgery
+  geokit-rails3
+  globalize3
+  globalize_spree!
+  haml
+  has_scope
+  i18n
+  inherited_resources (= 1.1.2)
+  isolate-scenarios
+  launchy
+  machinist (>= 2.0.0.beta1)
+  mechanize
+  nifty-generators
+  nokogiri
+  paperclip
+  pg
+  rails (= 3.0.3)
+  rails3-generators
+  rails_admin!
+  random_data
+  rcov
+  rdiscount
+  role_model
+  rspec (= 2.1.0)
+  rspec-rails (= 2.1.0)
+  ruby-debug
+  ruby-debug19
+  ruby-graphviz
+  seed-fu
+  sham
+  shiny
+  spork
+  spree!
+  spree_contact_form!
+  spree_social!
+  spree_testimonials!
+  suppress_validations!
+  term-ansicolor
+  thin
+  utility_belt
+  webrat (= 0.7.1)
+  wirble

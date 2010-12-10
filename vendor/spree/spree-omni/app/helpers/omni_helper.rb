@@ -1,0 +1,2 @@
+module OmniHelper
+end

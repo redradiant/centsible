@@ -1,0 +1,22 @@
+login: &login
+  adapter: postgresql
+  username: pennyrace
+  password: businesstime
+  host: 173.255.221.95
+  port: 5432
+  encoding: SQL_ASCII
+
+development:
+  <<: *login
+  database: pennyrace_d
+
+test: &test
+  <<: *login
+  database: pennyrace_t
+
+production:
+  <<: *login
+  database: pennyrace_p
+
+cucumber:
+  <<: *test

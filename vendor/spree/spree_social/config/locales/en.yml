@@ -1,0 +1,18 @@
+en:
+  linked_accounts: Linked Accounts
+  social_servers: Social Network Providers
+  social_servers_description: Configure Social Networks for login authorizations.
+  new_social_method_warning: You must restart Spree for these changes to take effect
+  edit_social_method_warning: You must restart Spree if you change your key and / or secert for the change to take effect
+  social_methods: Social Network Providers
+  new_social_method: New Provider
+  edit_social_method: Edit Provider
+  social_provider: Authentication Source
+  social_enable_provider: Enable Authentication Source
+  social_api_key: Authentication API Key
+  social_api_secret: Authentication Secret
+  devise:
+    omniauth_callbacks:
+      success: 'Successfully authorized from %{kind} account.'
+      failure: 'Could not authorize you from %{kind} because "%{reason}".'
+      
