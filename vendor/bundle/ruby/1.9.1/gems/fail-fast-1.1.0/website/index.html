@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <link rel="stylesheet" href="stylesheets/screen.css" type="text/css" media="screen" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>
+      fail fast
+  </title>
+  <script src="javascripts/rounded_corners_lite.inc.js" type="text/javascript"></script>
+<style>
+
+</style>
+  <script type="text/javascript">
+    window.onload = function() {
+      settings = {
+          tl: { radius: 10 },
+          tr: { radius: 10 },
+          bl: { radius: 10 },
+          br: { radius: 10 },
+          antiAlias: true,
+          autoPad: true,
+          validTags: ["div"]
+      }
+      var versionBox = new curvyCorners(settings, document.getElementById("version"));
+      versionBox.applyCornersToAll();
+    }
+  </script>
+</head>
+<body>
+<div id="main">
+
+    <h1>fail fast</h1>
+    <div class="sidebar">
+      <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/fail-fast"; return false'>
+        <p>Get Version</p>
+        <a href="http://rubyforge.org/projects/fail-fast" class="numbers">1.0.0</a>
+      </div>
+    </div>
+    <h2>Description</h2>
+<p>FailFast is a collection of assertion methods intended for lightweight contract checking.</p>
+<h2>Installing</h2>
+<pre>sudo gem install fail-fast</pre>
+<h2>Synopsis</h2>
+<p><pre class='syntax'>
+  <span class="keyword">def </span><span class="method">try</span>
+    <span class="keyword">yield</span>
+  <span class="keyword">rescue</span> <span class="constant">FailFast</span><span class="punct">::</span><span class="constant">AssertionFailureError</span>
+    <span class="punct">&quot;</span><span class="string">&lt;Assertion Failure&gt;</span><span class="punct">&quot;</span>
+  <span class="keyword">end</span>
+
+  <span class="ident">include</span> <span class="constant">FailFast</span><span class="punct">::</span><span class="constant">Assertions</span>
+
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert</span><span class="punct">(</span><span class="constant">true</span><span class="punct">)</span> <span class="punct">}</span>            <span class="comment"># =&gt; true</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert</span><span class="punct">(</span><span class="constant">false</span><span class="punct">)</span> <span class="punct">}</span>           <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">}</span>             <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+
+  <span class="comment"># We can check multiple values at once</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert</span><span class="punct">(&quot;</span><span class="string">foo</span><span class="punct">&quot;,</span> <span class="symbol">:bar</span><span class="punct">,</span> <span class="number">42</span><span class="punct">)</span> <span class="punct">}</span> <span class="comment"># =&gt; 42</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert</span><span class="punct">(</span><span class="number">1</span><span class="punct">,</span> <span class="number">2</span><span class="punct">,</span> <span class="constant">nil</span><span class="punct">)</span> <span class="punct">}</span>       <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+
+  <span class="comment"># assert_exists only checks for nil-ness - false is OK.</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_exists</span><span class="punct">(</span><span class="constant">true</span><span class="punct">)</span> <span class="punct">}</span>     <span class="comment"># =&gt; true</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_exists</span><span class="punct">(</span><span class="constant">false</span><span class="punct">)</span> <span class="punct">}</span>    <span class="comment"># =&gt; false</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_exists</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">}</span>      <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+
+  <span class="comment"># check further constraints after verifying the object is non-nil</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_exists</span><span class="punct">(</span><span class="number">99</span><span class="punct">)</span> <span class="punct">{|</span><span class="ident">n</span><span class="punct">|</span> <span class="ident">n</span> <span class="punct">&gt;</span> <span class="number">100</span> <span class="punct">}</span> <span class="punct">}</span> <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+
+  <span class="comment"># Assert that a collection is non-empty</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_one_or_more</span><span class="punct">([</span><span class="number">1</span><span class="punct">])</span> <span class="punct">}</span>         <span class="comment"># =&gt; [1]</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_one_or_more</span><span class="punct">(</span><span class="symbol">:foo</span> <span class="punct">=&gt;</span> <span class="symbol">:bar</span><span class="punct">)</span> <span class="punct">}</span> <span class="comment"># =&gt; {:foo=&gt;:bar}</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_one_or_more</span><span class="punct">([])</span> <span class="punct">}</span>           <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+
+  <span class="comment"># #deny is the opposite of #assert</span>
+  <span class="ident">try</span> <span class="punct">{</span>  <span class="ident">deny</span><span class="punct">(</span><span class="constant">true</span><span class="punct">)</span> <span class="punct">}</span>             <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">deny</span><span class="punct">(</span><span class="constant">false</span><span class="punct">)</span> <span class="punct">}</span>             <span class="comment"># =&gt; false</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">deny</span><span class="punct">(</span><span class="constant">nil</span><span class="punct">)</span> <span class="punct">}</span>               <span class="comment"># =&gt; nil</span>
+
+  <span class="comment"># Assert that an object is hash-like and contains non-nil values for given keys</span>
+  <span class="ident">h</span> <span class="punct">=</span> <span class="punct">{</span><span class="symbol">:foo</span> <span class="punct">=&gt;</span> <span class="number">1</span><span class="punct">,</span> <span class="symbol">:bar</span> <span class="punct">=&gt;</span> <span class="number">2</span><span class="punct">,</span> <span class="symbol">:baz</span> <span class="punct">=&gt;</span> <span class="constant">nil</span><span class="punct">}</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_keys</span><span class="punct">(</span><span class="ident">h</span><span class="punct">,</span> <span class="symbol">:foo</span><span class="punct">,</span> <span class="symbol">:bar</span><span class="punct">)</span> <span class="punct">}</span> <span class="comment"># =&gt; {:foo=&gt;1, :bar=&gt;2, :baz=&gt;nil}</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_keys</span><span class="punct">(</span><span class="ident">h</span><span class="punct">,</span> <span class="symbol">:baz</span><span class="punct">)</span> <span class="punct">}</span>       <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+  <span class="ident">try</span> <span class="punct">{</span> <span class="ident">assert_keys</span><span class="punct">(</span><span class="ident">h</span><span class="punct">,</span> <span class="symbol">:buz</span><span class="punct">)</span> <span class="punct">}</span>       <span class="comment"># =&gt; &quot;&lt;Assertion Failure&gt;&quot;</span>
+</pre></p>
+<h2>Rationale</h2>
+<p>Unexpected <tt>nil</tt>s and other bad values will usually bring a Ruby program down eventually, but the actual point of failure might be deep down the call stack and the error message less than revealing.  Judicious use of FailFast assertions to check your assumptions can ensures that the program will end as soon as a contract violation is detected, with a stack trace that points directly at the assertion which failed.</p>
+<p>One of the primary goals of FailFast is to make assumption-checking declarative.  Assumption checking should be simple and concise so that we can get to the meat of a method without getting bogged down in verifications.  At the same time, FailFast is <em>lightweight</em>.  It is not a metaprogrammed Design-by-Contract <span class="caps">DSL</span>.  It is a simple set of shorthand methods for validating values.</p>
+<p>It is not the intent of FailFast to have specialized assertions for every eventuality.  Rather, it seeks to cover a few common cases where there is a potential for significantly increased clarity and declarativeness.</p>
+<h2>Features</h2>
+<ul>
+	<li>Fully spec&#8217;d/tested.</li>
+	<li>In most cases assertions return their last argument.  This makes it easy to check values inline.  For instance: <code>assert_exists(obj).foo()</code></li>
+	<li>Most assertions can take a block where a further boolean check can be performed. For instance, use <code>assert_exists(x) { x.predicate? }</code> to check first that <code>x</code> is not nil, and then that it satisfies a predicate.</li>
+	<li><tt>AssertionFailure</tt> derives directly from <tt>Exception</tt> so that it will never be silently eaten by no-argument <tt>catch</tt> statements.</li>
+</ul>
+<h2>Documentation</h2>
+<p>See the <a href="http://fail-fast.rubyforge.org/rdoc/">RDoc</a>.</p>
+<h2>Source</h2>
+<ul>
+	<li>rubyforge: <a href="http://rubyforge.org/scm/?group_id=7409">http://rubyforge.org/scm/?group_id=7409</a></li>
+</ul>
+<pre>git clone git://rubyforge.org/fail-fast.git</pre>
+<h2>License</h2>
+<p>This code is free to use under the terms of the <span class="caps">MIT</span> license.</p>
+<h2>Contact</h2>
+<p>Questions, comments, suggestions, patches: email <a href="mailto:avdi@avdi.org">Avdi Grimm</a></p>
+    <p class="coda">
+      <a href="avdi@avdi.org">Avdi Grimm</a>, 30th November 2008<br>
+      Theme extended from <a href="http://rb2js.rubyforge.org/">Paul Battley</a>
+    </p>
+</div>
+
+<!-- insert site tracking codes here, like Google Urchin -->
+
+</body>
+</html>

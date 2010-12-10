@@ -1,16 +1,24 @@
 GIT
-  remote: git://github.com/sferik/rails_admin.git
-  revision: 8ab4a13e66c918afcc5e85e5f1fb2ffdeb0cb039
-  specs:
-    rails_admin (0.0.1)
-      builder (~> 2.1.0)
-      rails (~> 3.0.3)
-
-GIT
   remote: git@github.com:redradiant/suppress_validations.git
   revision: 6ff10238cd1965d7cf12c9cd7c4e6cc5f21fbc2a
   specs:
     suppress_validations (0.0.1)
+
+GIT
+  remote: https://github.com/calas/spree-email-to-friend.git
+  revision: 90b50c27b0698ce4920b6161334887c1def0344a
+  specs:
+    spree_email_to_friend (0.30.0.beta2)
+      recaptcha
+      spree_auth (>= 0.30.0.beta2)
+      spree_core (>= 0.30.0.beta2)
+
+GIT
+  remote: https://github.com/jeffp/enumerated_attribute.git
+  revision: 68a8b339892ae475b1d751eb58519e9736f94b76
+  specs:
+    enumerated_attribute (0.2.16)
+      meta_programming (>= 0.2.1)
 
 GIT
   remote: https://github.com/joshnuss/spree-contact-form.git
@@ -126,7 +134,6 @@ GEM
       hookr (~> 1.0.0)
     archive-tar-minitar (0.5.2)
     arel (2.0.6)
-    arrayfields (4.7.4)
     arspy (0.0.8)
       awesome_print (>= 0.1.4)
     asin (0.0.8)
@@ -141,10 +148,6 @@ GEM
       mime-types
       xml-simple
     bcrypt-ruby (2.1.2)
-    bj (1.0.1)
-      main (>= 2.6.0)
-      orderedhash (>= 0.0.3)
-      systemu (>= 1.2.0)
     braintree (2.6.2)
       builder
     builder (2.1.2)
@@ -158,6 +161,7 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (>= 0.0.27)
       xpath (~> 0.1.2)
+    carmen (0.2.1)
     celerity (0.8.5)
     childprocess (0.1.4)
       ffi (~> 0.6.3)
@@ -197,7 +201,6 @@ GEM
       addressable (~> 2.2.2)
       multipart-post (~> 1.0.1)
       rack (>= 1.1.0, < 2)
-    fattr (2.2.0)
     fbgraph (1.5.2)
       activesupport
       activesupport
@@ -276,11 +279,9 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    main (4.4.0)
-      arrayfields (>= 4.7.4)
-      fattr (>= 2.1.0)
     mechanize (1.0.0)
       nokogiri (>= 1.2.1)
+    meta_programming (0.2.2)
     mime-types (1.16)
     multi_json (0.0.5)
     multipart-post (1.0.1)
@@ -298,7 +299,6 @@ GEM
     oauth2 (0.1.0)
       faraday (~> 0.5.0)
       multi_json (~> 0.0.4)
-    orderedhash (0.0.6)
     orm_adapter (0.0.3)
     paperclip (2.3.6)
       activerecord
@@ -334,6 +334,7 @@ GEM
       activerecord (>= 3.0.0)
     rd_unobtrusive_date_picker (0.1.0)
     rdiscount (1.6.5)
+    recaptcha (0.2.3)
     redgreen (1.2.2)
     responders (0.6.2)
     rest-client (1.6.1)
@@ -376,11 +377,9 @@ GEM
       json_pure
       rubyzip
     sham (0.2.0)
-    shiny (0.3.1)
     spork (0.8.4)
     state_machine (0.9.4)
     stringex (1.2.0)
-    systemu (1.2.0)
     term-ansicolor (1.0.5)
     thin (1.2.7)
       daemons (>= 1.0.9)
@@ -417,15 +416,15 @@ DEPENDENCIES
   asin
   autotest
   awesome_print
-  aws-s3
-  bj
   capybara
+  carmen
   colored
   cucumber
   cucumber-rails
   database_cleaner
   default_value_for
   differ
+  enumerated_attribute!
   fabrication
   faker
   fbgraph
@@ -443,11 +442,9 @@ DEPENDENCIES
   mechanize
   nifty-generators
   nokogiri
-  paperclip
   pg
   rails (= 3.0.3)
   rails3-generators
-  rails_admin!
   random_data
   rcov
   rdiscount
@@ -459,12 +456,14 @@ DEPENDENCIES
   ruby-graphviz
   seed-fu
   sham
-  shiny
   spork
   spree!
   spree_contact_form!
+  spree_email_to_friend!
   spree_social!
   spree_testimonials!
+  state_machine
+  stringex
   suppress_validations!
   term-ansicolor
   thin

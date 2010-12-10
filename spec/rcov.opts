@@ -1,0 +1,3 @@
+--exclude "gems/*,features/*" 
+--rails
+--text-report

@@ -16,8 +16,8 @@ task :release => :package do
   Rake::Task['gem:push'].invoke
 end
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new
+#require 'rspec/core/rake_task'
+#RSpec::Core::RakeTask.new
 
 require 'cucumber/rake/task'
 Cucumber::Rake::Task.new do |t|

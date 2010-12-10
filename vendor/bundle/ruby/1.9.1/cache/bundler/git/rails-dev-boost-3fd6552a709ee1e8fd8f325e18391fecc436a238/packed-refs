@@ -1,0 +1,6 @@
+# pack-refs with: peeled 
+b68d586a550d80ad9870751596ee08b3f81084c7 refs/heads/thinkingfix
+0a053832ad262e10b9373d9c1d2550cf10893ec4 refs/heads/rails-2-3
+2d3562b718b02e1457611de2f3172fd144d20112 refs/heads/rails-2-2
+e6f3025ec5146c60836acbaf4549a517443bf216 refs/heads/master
+c2eacf76e8bb46fc83be4de95771eb3f42285049 refs/heads/constants-to-files

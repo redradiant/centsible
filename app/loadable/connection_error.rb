@@ -1,0 +1,2 @@
+class ConnectionError < RuntimeError
+end

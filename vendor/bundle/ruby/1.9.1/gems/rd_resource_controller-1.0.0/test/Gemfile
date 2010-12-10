@@ -1,0 +1,11 @@
+source 'http://rubygems.org'
+
+gem 'rails', '3.0.0.beta4'
+gem 'sqlite3-ruby', :require => 'sqlite3'
+gem "resource_controller", :require => "resource_controller", :path => "../"
+
+group :test do
+    gem "shoulda", :git => "git://github.com/thoughtbot/shoulda.git"
+    gem "mocha"
+    gem "ruby-debug"
+end

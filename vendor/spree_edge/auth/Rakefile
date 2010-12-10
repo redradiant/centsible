@@ -20,8 +20,8 @@ end
 desc "Default Task"
 task :default => [ :spec ]
 
-require 'rspec'
-require 'rspec/core/rake_task'
+#require 'rspec'
+#require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new
 
 require 'cucumber/rake/task'

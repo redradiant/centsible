@@ -1,0 +1,99 @@
+= Carmen- A simple collection of geographic names and abbreviations for Ruby
+
+This library will work as a drop in replacement for the official Rails country_select and its various forks. The idea is to provide a single library for all geographic naming concerns, and unify them under a consistent API.
+
+States are supported for the following countries: Australia, Brazil, Canada, Cuba, Denmark, Germany, Italy, Mexico, Norway, Spain, Ukraine, and United States.
+
+== Installation
+
+  gem install carmen
+  
+If you're in Rails 2.3 or earlier, place this in your environment.rb:
+
+  config.gem 'carmen'
+  
+If you're in Rails 3, put this in your Gemfile:
+
+  gem "carmen"
+
+
+== Get a list of all countries
+  
+  Carmen.countries => […, ['Germany', 'DE'], …, ['United States', 'US'], …]
+  Carmen.countries(:locale => 'de') => […, ['Deutschland', 'DE'], …, ['Vereinigte Staaten von Amerika', 'US'], …]
+
+== State list retrieval
+  
+  Carmen::states('US') => [['Alabama', 'AL'], ['Arkansas', 'AR'], ... ]
+  Carmen::states => [['Alabama', 'AL'], ['Arkansas', 'AR'], ... ] # uses default country
+  Carmen::state_names('US') => ['Alabama', 'Arkansas', ... ]
+  Carmen::state_codes('US') => ['AL', 'AR', ... ]
+
+== Abbreviation handling
+
+  Carmen::country_name('US') => 'United States'
+  Carmen::country_code('Canada') => 'CA'
+  Carmen::state_code('Illinois') => 'IL'
+  Carmen::state_code('Manitoba', 'CA') => 'MB'
+  Carmen::state_name('AZ') => 'Arizona'
+                   
+
+== Default Country
+
+Methods that take a country code argument will use the default country if none is provided. The default default country is 'US'. You can change it to any country code:
+
+  Carmen.default_country = 'CA'
+
+== Localization
+
+You can switch between different localizations of the countries list, by setting the locale value (default is :en):
+
+  Carmen.default_locale = :de
+  
+Methods that return country names also take an optional options hash as the last argument, which can be use to override the default locale for a single call:
+
+  Carmen::country_name('US') => 'United States'
+  Carmen::country_name('US', :locale => :de) => 'Vereinigte Staaten von Amerika'
+
+Currently included localizations are: English (:en), German (:de)
+
+
+== Todo
+
+* Many countries, such as Spain, have additional levels beneath 'state' that we would ideally support. Thanks to Alberto Molpeceres for bringing this to my attention.
+* Split the Rails-specific view helpers out into a separate gem (carmen-rails)
+
+== Changelog
+* 0.2.1 Added regions for New Zealand (yehezkielbs)
+* 0.2.0 Merge in Maximilian Schulz's locale fork, refactor internals to better support locales, and update documentation.       
+        Remove Carmen::STATES and Carmen::COUNTRIES constants in favor of module instance variables and proper accessors.
+        Add a test_helper and remove dependency on RubyGems.
+* 0.1.3 DEPRECATE Carmen::COUNTRIES in favor of Carmen.countries
+
+
+== Development notes
+
+The plugin does not require rubygems anywhere in the test or libraries, so if you are having trouble with load errors running the tests, prepend your command with RUBYOPT=rubygems. {More info}[http://tomayko.com/writings/require-rubygems-antipattern].
+
+
+== Credits
+
+These fine characters have contributed state lists, patches, or reported bugs:
+
+Jose Angel Cortinas (jacortinas)
+Domizio Demichelis (ddnexus)
+Thiago Jackiw (railsfreaks)
+Russ Johnson (russjohnson)
+Henrik Hodne (dvyjones)
+Yuval Kordov (uberllama)
+Alberto Molpeceres (molpe)
+Dimas Priyanto (dimaspriyanto)
+Wojtek Ogrodowczyk (sharnik)
+Tobias Schmidt (grobie)
+Maximilian Schulz (namxam)
+Mani Tadayon (bowsersenior)
+Andriy Tyurnikov (andriytyurnikov)
+lonestarsoftware
+yehezkielbs
+
+If I missed your name in this list, please let me know and I will add it. I tried to find everyone that has sent in patches or found bugs, but I may have missed a few folks.

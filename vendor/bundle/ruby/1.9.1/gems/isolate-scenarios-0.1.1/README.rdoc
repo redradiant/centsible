@@ -1,0 +1,113 @@
+= isolate-scenarios
+
+When you're developing libraries that interact with Rails, or any other large project, it can be difficult to know if you are compatible with any specific version, and to make sure you remain compatible.
+
+isolate (http://github.com/jbarnette/isolate) was released as a way to help sandbox the gems available to your project. This is pretty great, because it lets you know for sure that only the gems as well as the specific version you care about.
+
+The only thing this is missing is the ability to define the gem version scenarios you care about, and be able run your test suite against each scenario. And that is where isolate-scenarios comes into place.
+
+== Getting started
+
+You need the gem first:
+
+  gem install isolate-scenarios
+
+Now head over to your project. There are two additions you'll need. First, you need an Isolate file, which describes your gem dependencies, as well as the gem you'll want to test different versions of:
+
+ # These are dependencies that don't need to vary
+ # See isolate documentation for more detail: http://github.com/jbarnette/isolate
+ gem 'puppet', '= 0.24.8'
+ gem 'facter', '>= 1.5.4'
+ gem 'highline', '>= 1.5.0'
+ gem 'builder', '>= 2.1.2'
+
+ # This is the gem we'll be testing different versions of.
+ # It's similar to the normal `gem` usage, except you don't give a version as a second argument,
+ # And it recognizes two additional options, :scenarios and :default_scenario
+ gem 'activesupport', :scenarios => %w{
+                                       2.1.2
+                                       2.2.3
+                                       2.3.5
+                                       2.3.8
+                                       3.0.0.beta4
+                                    },
+                      # The value of :scenarios is a list of version strings
+
+                      :default_scenario => '2.3.8'
+                      # The value of default_scenario will be used when you don't
+                      # explicitly specify a scenario to run. If you don't specify this,
+                      # the last scenario is used.
+
+To verify this is setup, you can use 'isolate-scenarios list' to show them:
+
+ activesupport:
+ * 2.1.2
+ * 2.2.3
+ * 2.3.5
+ * 2.3.8 (default)
+ * 3.0.0.beta4
+
+Next, you'll need to update your test suite's helper, typically spec/spec_helper.rb or test/test_helper.rb. You need to place these lines as soon as you can in the file:
+
+  require 'isolate/scenarios'
+  require 'isolate/now'
+
+Technically this is a third task, but you may also to add isolate-scenarios as a development dependency (http://docs.rubygems.org/read/chapter/20#dependencies) of your library. This will vary depending on how you manage your gem's dependencies.
+
+Now, when you run your tests, it will default to using the last version you specified. For example:
+
+  $ rake spec
+  (in shadow_puppet)
+  Activating default scenario: activesupport-2.3.8
+  # omitted
+
+If you want to test against a specific scenario, you can specify it as an environment variable:
+
+  $ rake spec ISOLATE_ACTIVESUPPORT_SCENARIO=3.0.0.beta4
+  (in shadow_puppet)
+  Activating scenario: activesupport-3.0.0.beta4
+  # omitted
+   
+This is cool and all, but we still would love to test all the scenarios in one shot. 'isolate-scenarios rake' lets you just do that. This will iterate over each scenario, and invoke rake with any args you pass it.
+
+
+  $ isolate-scenarios rake spec
+  (in shadow_puppet)
+  Activating scenario: activesupport-2.1.2
+  # omitted
+
+  (in shadow_puppet)
+  Activating scenario: activesupport-2.2.3
+  # omitted
+
+  (in shadow_puppet)
+  Activating scenario: activesupport-2.3.5
+  # omitted
+
+  (in shadow_puppet)
+  Activating (default) scenario: activesupport-2.3.8
+  # omitted
+
+  (in shadow_puppet)
+  Activating scenario: activesupport-3.0.0.beta4
+  # omitted
+
+== Limitations
+
+While you can define multiple gems with scenarios, using `isolate-scenarios rake` will not try to test different combinations of the gem versions at this time.
+
+There can be a bit of redudancy in gem dependency, ie you might specify them in your Rakefile via jeweler, or in Gemfile, or in Isolate, etc. isolate-scenarios doesn't try to reduce that redudancy at all yet.
+
+0 tests. I'm sorry, but I'm a bad bad man wanting to spike out an initial version. I'm pretty much sure I'll be rewriting parts of this, and having tests going forward.
+
+== Note on Patches/Pull Requests
+ 
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+== Copyright
+
+Copyright (c) 2010 Joshua Nichols. See LICENSE for details.

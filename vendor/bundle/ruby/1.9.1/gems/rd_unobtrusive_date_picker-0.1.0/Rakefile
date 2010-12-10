@@ -1,0 +1,29 @@
+require 'rake'
+require 'rake/rdoctask'
+require 'rubygems'
+require 'spec/rake/spectask'
+
+desc 'Generate documentation for the unobtrusive_date_picker plugin.'
+Rake::RDocTask.new(:rdoc) do |rdoc|
+   rdoc.rdoc_dir = 'rdoc'
+   rdoc.title    = 'Unobtrusive Date-Picker'
+   rdoc.options << '--line-numbers' << '--inline-source'
+   rdoc.rdoc_files.add ['lib/**/*.rb', 'README.rdoc']
+   rdoc.options << '--main' << 'README.rdoc'
+end
+
+desc "Run all specs"
+Spec::Rake::SpecTask.new do |t|
+  t.spec_opts = ['--options', 'spec/spec.opts']
+end
+
+require 'echoe'  
+   
+Echoe.new('unobtrusive_date_picker', '0.1.0') do |p|  
+  p.description     = "Helper for creating a date or date-time picker that uses the Unobtrusive Date-Picker Widge"  
+  p.url             = "http://github.com/brianjlandau/unobtrusive_date_picker"  
+  p.author          = "Brian landau"  
+  p.email           = ""  
+  p.ignore_pattern  = ["tmp/*", "script/*"]  
+  p.development_dependencies = []  
+end  

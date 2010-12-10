@@ -1,0 +1,4 @@
+# pack-refs with: peeled 
+5554e66b85b902594466d13415e0d378cdeeed79 refs/heads/spree-0-11-stable
+90b50c27b0698ce4920b6161334887c1def0344a refs/heads/master
+be3fc57d64a72a9d28b4e3bb7a8dccf630f569eb refs/heads/gh-pages

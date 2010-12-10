@@ -1,0 +1,7 @@
+require 'rubygems'
+require 'rails_test_serving'
+RailsTestServing.boot
+
+require 'test_loader'
+
+TestLoader.

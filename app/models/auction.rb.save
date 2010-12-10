@@ -1,0 +1,224 @@
+require_dependency 'bid'
+require_dependency 'active_record/transitions'
+
+class Auction < ActiveRecord::Base
+
+  include ActionView::Helpers::TextHelper
+  include ActiveRecord::Transitions
+
+  enum_attr :gender, %w(male female)
+  enum_attr :auction_kind, %w(novice, ^standard, advanced)
+
+  acts_as_enumerated_state :alpha
+  acts_as_enumerated_state :beta, :module=>'Beta'
+
+  state_machine do
+    state :upcoming # first one is initial state
+    state :open
+    state :cancelled
+    state :closed #, :enter => lambda { |a| a.can_end? rescue false }
+    state :awaiting_payment
+
+    event :end do
+      transitions :to => :closed, :from => [:open, :cancelled, :awaiting_payment], :on_transition => :end_auction
+    end
+
+    event :cancel do
+      transitions :to => :closed, :from => [:open, :awaiting_payment, :cancelled, :closed], :on_transition => :end_auction
+    end
+
+    # Takes 1 argument: Number of seconds to reopen for.
+    event :reopen do
+      transitions :to => :open, :from => [:cancelled, :awaiting_payment, :closed], :on_transition => :reopen_auction
+    end
+
+    event :start do
+      transitions :to => :open, :from => [:upcoming], :on_transition => :open_auction
+    end
+  end
+
+  belongs_to :item
+  belongs_to :pool
+
+  has_many :bids, :order => "effective_at ASC"
+  has_many :bids_by_count, :order => "bidcount ASC", :class_name => "Bid", :foreign_key => "auction_id"
+
+  # Calculate anexplicit end time.
+  scope :with_end, select("*,cast(start_time as timestamp without time zone) + cast(cast((end_interval + extension_interval) as character varying) || ' second' as interval) as current_end_time").order("current_end_time DESC")
+  scope :active, where(:status => "open").with_end
+  scope :upcoming, where(:status => "upcoming").with_end
+  scope :closed, where(:status => "closed").with_end
+  scope :cancelled, where(:status => "cancelled").with_end
+  scope :unknown, where("status IS NULL").with_end
+  #scope :hot, where(:hot => true).with_end
+  scope :recently_updated, where("updated_at > CURRENT_TIMESTAMP - interval '4 hours'").with_end
+
+  # Find auctions with our item.
+  def with_same_item
+    self.class.with_end.where(["item_id = ?", self.item_id])
+  end
+
+
+  #####  Assertions
+
+  def assert_bids_in_sync!
+    return true if (bids.blank? && bids_by_count.blank?)
+    sync = (bids.map { |b| b.id.to_i } == bids_by_count.map { |b| b.id.to_i }) rescue false
+    raise "Bid sequence is out of sync!  Please check bid history for this auction!" unless sync
+    true
+  end
+
+  def assert_has_bids!
+    assert_bids_in_sync!
+    raise "This auction has no bids!" if (bids.blank? && bids_by_count.blank?)
+    true
+  end
+
+  def assert_open!
+    raise "Auction ended #{distance_of_time_in_words(-1 * seconds_remaining.to_i)}." unless started? && running? && !ended?
+    true
+  end
+
+  def assert_closed!
+    raise "Auction is not closed!" unless self.closed?
+    true
+  end
+
+  ### Tests
+
+  # TODO: Set requirements for a valid auction.
+  def can_start?
+    true
+  end
+
+  def can_end?
+    assert_bids_in_sync! && assert_has_bids! && assert_open!
+  end
+
+  def can_reopen?
+    assert_bids_in_sync! && assert_has_bids! && assert_closed!
+  end
+
+
+  ####### Event atomic actions
+
+  def end_auction
+    can_end?
+    self.update_attribute(:winning_bid_id, last_bid.id) unless winner.blank?
+  end    
+
+  def open_auction
+    can_start?
+  end    
+
+  def reopen_auction(add_seconds = 10.minutes)
+    can_reopen?
+    new_interval = (Time.now.getutc + add_seconds).getutc - self.start_time.getutc
+    self.winning_bid_id = nil
+    self.end_interval = new_interval.to_i
+    self.extension_interval = 0
+    self.save!
+  end
+
+  def submit_bid!(new_bid)
+    params.symbolize_keys!
+    params.delete(:effective_at)
+    raise "No bid given!" unless new_bid.kind_of?(Bid)
+
+    Bid.transaction do
+      use_time = Time.now.getutc
+      bidnum = Bid.count(:conditions => ['auction_id = ?', self[:id]] ) + 1
+      add_seconds = overtime? ? 10 : 0
+      new_bid.attributes = {
+        :bidcount => bidnum,
+        :effective_at => use_time,
+        :extension_interval => (self.extension_interval.to_i + add_seconds rescue 0)
+        }
+      begin
+        new_bid.save!
+      rescue Exception => e
+        raise(BidError, "Unable to save your new bid: #{new_bid.errors.full_messages}")
+        new_bid.destroy
+      end
+    end
+
+    new_bid
+  end
+
+
+  ###### Misc
+
+  # Sort again for good measure?
+  def last_bid
+    self.bids.last rescue nil
+  end
+
+  def current_winning_user
+    last_bid.user rescue nil
+  end
+
+
+  #####  Time related methods
+
+  def use_time
+    Time.now.getutc
+  end
+
+  def end_time
+    (self.start_time + self.end_interval.to_i + self.extension_interval.to_i).getutc
+  end
+
+  def overtime_start
+    (self.start_time + self.end_interval.to_i).getutc
+  end
+
+  def overtime?
+    (started? && open? && (overtime_start < use_time)) rescue false
+  end
+
+  def ended?
+    closed? || (use_time.getutc > end_time.getutc) rescue true
+  end
+
+  def started?
+    open? && (self.start_time.getutc < use_time.getutc) rescue false
+  end
+
+  def running?
+    open? && started? && !ended?
+  end
+
+  def seconds_remaining(left = nil)
+    left ||= (end_time.getutc - Time.now.getutc).to_f
+    #left < 0 ? 0.to_f : left.to_f
+    left.to_f
+  end
+
+  def seconds_remaining_words(left = nil)
+    pluralize((left || seconds_remaining).to_i, "second")
+  end
+
+  def minutes_remaining(left = nil, seconds = false)
+    left ||= (seconds_remaining / 1.minute.to_f)
+    ret = pluralize(left.to_i, "minute")
+    ret += ' and ' + seconds_remaining_words(left.decimal_only) if seconds
+    ret
+  end
+
+  def hours_remaining(left = nil)
+    left ||= (seconds_remaining / 1.hour.to_f)
+    pluralize(left.to_i, "hour") + ' and ' + minutes_remaining(left.decimal_only)
+  end
+
+  def remaining_time_words
+    hours = (seconds_remaining / 1.hour.to_f)
+    minutes = (seconds_remaining / 1.minute.to_f)
+    if hours > 1.0
+      return hours_remaining(hours)
+    elsif minutes > 5.0
+      return minutes_remaining(minutes, true)
+    else
+      return seconds_remaining_words
+    end
+  end
+end

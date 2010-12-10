@@ -1,0 +1,215 @@
+= ARSpy
+
+A Rails console command line tool for exploring, browsing and inspecting 
+the structure, associations and data of ActiveRecord data models.
+
+== Resources
+
+Install
+
+* sudo gem install arspy
+
+Use
+
+* require 'arspy'
+
+	
+== Description
+
+ARSpy provides a number of functions for inspecting a Rails application's 
+ActiveRecord model.  To use the gem all you need to to is the following:
+
+  sudo gem install arspy
+  ruby script/console
+  require 'arspy'
+
+With ARSpy, you can view associations, fields and data related to tables and relations
+in an easy-to-read format.
+
+== Inspecting ActiveRecord Associations and Attributes (Fields)
+
+=== 'Listing fields' with the 'lf' command
+
+Append the 'lf' command to an ActiveRecord object, class, or association method to
+print the name, type and database variable type for each attribute. 
+
+  User.lf
+  first_name  :string   (varchar(50))
+  last_name   :string   (varchar(50))
+  active      :boolean  (boolean)
+  age         :age      (int(11))
+
+
+=== 'Listing associations' with the 'la' command
+
+Append the 'la' command to an ActiveRecord object, class or association method to 
+print the name, type, class and configuration information for each association.
+
+  User.la
+  blogs        has_many  (Blog)
+  comments     has_many  (Comment)
+  friendships  has_many  (Friendship)  
+  friends      has_many  (User)        {:through=>:friendships}
+  assets       has_many  (Asset)       {:as=>:asset}
+
+=== Applying 'lf' and 'la' commands
+
+The 'la' and 'lf' command can be used on any ActiveRecord object, class, association
+or array of these. 
+
+  u = User.find_by_last_name('Smith')
+  u.la
+  u.blogs.lf
+  u.blogs.title
+  u.blogs.la
+  u.blogs.comments.la
+  u.blogs.comments.user.lf
+  u.blogs.comments.user.pr(:first_name, :last_name)  #see 'pr' command below
+ 
+
+== Printing in Columns
+
+=== Printing arrays with the 'pr' command
+
+Array data in the console is not so easy to read.
+
+  names
+  ["Peter Smith", "Sarah Johnson", "Randy Wade", "Alex Parsons", "Beth Silverton",
+  "Jenny Westmeyers", "Benjamin Grant", "Maria Stone"]
+
+Use the 'pr' command to print in a column.
+
+  names.pr
+  Peter Smith
+  Sara Johnson
+  ...
+
+=== Print columns of object attributes with the 'pr' command
+
+Arrays of ActiveRecord objects are even more difficult to read and analyze.  Use
+'pr' command to print attributes (fields) in columns.
+
+  User.find(2).friends.pr :first_name, :last_name 
+  Randy     Wade
+  Benjamin  Grant
+  Jenny     Westmeyers
+  Maria     Stone
+
+=== Printing expressions with 'pr' command
+
+Pass an expression as one of the columns to the 'pr' command.
+
+  User.find(2).friends.pr '"#{last_name}, #{first_name}"', :age
+  Wade, Randy        25
+  Grant, Benjamin    28
+  Westmeyers, Jenny  24
+  Stone, Maria       33
+
+Expressions using associations
+
+  User.find(2).friends.pr :first_name, :last_name, 'comments.count', 'blogs.count'
+  Randy     Wade        23   3
+  Benjamin  Grant       98   20
+  Jenny     Westmeyers  213  2
+  Maria     Stone       8    88
+
+=== Printing objects and classes
+
+ARSpy integrates 'awesome print' to print lists of objects and classes.  Print objects or
+classes with the 'pr' command, or explicitly print with the 'ap' command.
+
+  User.ap  # => prints the object attributes and columns with awesome print
+  User.find(2).blogs.title.pr  #=> prints the titles of all blogs
+  User.find(2).blogs.pr  # => prints the object fields and data usign awesome print
+
+
+== Iterating Associations and Data
+
+=== Chaining associations to get data sets
+
+Chain associations to get an array of the results.  For example, the following will
+collect all of the comment objects for all blogs written by User with ID=2.
+
+  User.find(2).blogs.comments
+  [#<Comment id: 21, user_id: 8, blog_id: 85, rating: 5, ... 
+
+Clean this up by further chainging to return an array of the 'comment' field 
+of each comment object and use 'pr' to print in a column.
+
+  User.find(2).blogs.comments.comment.pr
+  I agree with the blogger
+  I'm new to ActiveRecord.  Is there anyway to...
+  How do you use polymorphic associations to...
+  ...
+
+Note that chaining is accumulative.  To limit the results set, use the 'wi' or 'wo'
+commands.
+
+== Limiting data sets
+
+=== Limiting with the 'with' command
+
+The 'with' command is abbreviated to 'wi' in an expression.  It's like saying only show
+me the results with this condition OR this condition, etc.
+
+Say we want to limit comments in the above example to only those written by Randy Wade
+and Maria Stone.  If their user ids are [5, 9], then we can write
+
+  User.find(2).blogs.comments.wi(:user_id=>[5, 9]).comments.pr
+
+We could use ARSpy to look up the user ids.
+
+  User.find(2).blogs.comments.user.pr :first_name, :last_name, :id
+
+Note in this example, the 'wi' command is acting on attributes of the object immediately
+preceding it, namely, the Comment object.
+
+=== ORing and ANDing with the 'wi' command
+
+The 'wi' command can take an unlimited number of parameters.  Multiple parameters
+works as an OR operation on the results.  So the above example could have been written 
+
+  User.find(2).blogs.comments.wi(:user_id=>5, :user_id=>9).comments.pr
+
+with the same results.
+
+To get an AND operation, chain the 'wi' command.
+
+  User.find(2).blogs.comments.wi(:blog_id=>6).wi(:user_id=>5).comments.pr
+
+This example returns only comments for blog with ID 6 and user associated with
+the comment with ID 5.  On the other hand,
+
+  User.find(2).blogs.comments.wi(:blog_id=>6, :user_id=>5).comments.pr
+
+returns all comments associated with blog id 6 OR user id 5.
+
+=== Parameters of the 'wi' command
+
+The 'wi' command can take integers, strings and a hash of conditions.
+
+Strings are expressions evaluated against the preceding object.
+
+  User.find(2).blogs.comments.wi('user.last_name.include?("Grant")').comment.pr
+
+Integers are IDs for the object.
+
+  User.find(2).blogs.comments.wi(20,21,22).comment.pr
+
+A hash of {attribute=>[values]}.  The following displays comments belonging 
+to blogs with ids 6, 7 or 8.
+  
+  User.find(2).blogs.comments.wi(:blog_id=>[6,7,8]).comments.pr
+
+
+=== Excluding with the 'wo' (without) command
+
+The 'wo' command does the exact opposite of the 'wi' command, showing only those
+results that do not meet the conditions passed in the parameters.
+
+
+== Dependencies
+
+* ActiveRecord
+* ActiveSupport
+* Awesome Print

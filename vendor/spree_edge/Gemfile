@@ -1,5 +1,9 @@
 source 'http://rubygems.org'
 
+group :development do
+  gem 'rails-dev-boost', :git => 'git://github.com/thedarkone/rails-dev-boost.git', :require => 'rails_development_boost'
+end
+
 gem "spree", :path => File.dirname(__FILE__)
 
 # gem 'mysql'
@@ -11,7 +15,7 @@ gemspec
 
 group :test do
   gem 'rspec-rails', '~> 2.1.0'
-  gem 'factory_girl_rails'
+#  gem 'factory_girl_rails'
 end
 
 group :cucumber do
