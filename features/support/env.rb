@@ -55,7 +55,7 @@ Spork.each_run do
   # pages, more or less in the same way your application would behave in the
   # default production environment. It's not recommended to do this for all
   # of your scenarios, as this makes it hard to discover errors in your application.
-  ActionController::Base.allow_rescue = false
+  ActionController::Base.allow_rescue = true
   
   # If you set this to true, each scenario will run in a database transaction.
   # You can still turn off transactions on a per-scenario basis, simply tagging 
@@ -69,7 +69,7 @@ Spork.each_run do
   # after each scenario, which can lead to hard-to-debug failures in 
   # subsequent scenarios. If you do this, we recommend you create a Before
   # block that will explicitly put your database in a known state.
-  Cucumber::Rails::World.use_transactional_fixtures = true
+  Cucumber::Rails::World.use_transactional_fixtures = false
   # How to clean your database when transactions are turned off. See
   # http://github.com/bmabey/database_cleaner for more info.
   if defined?(ActiveRecord::Base)

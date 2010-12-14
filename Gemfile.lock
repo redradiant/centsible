@@ -35,7 +35,7 @@ GIT
       spree_core (>= 0.30.1)
 
 GIT
-  remote: https://tomash@github.com/tomash/globalize-spree.git
+  remote: https://github.com/tomash/globalize-spree.git
   revision: 9560f9f7d7e35082ff395776e9a1d02daa9b7ffe
   specs:
     globalize_spree (0.2.0)
@@ -285,6 +285,7 @@ GEM
     mime-types (1.16)
     multi_json (0.0.5)
     multipart-post (1.0.1)
+    mysql2 (0.2.6)
     nifty-generators (0.4.2)
     nokogiri (1.4.4)
     oa-core (0.1.6)
@@ -303,7 +304,6 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
-    pg (0.10.0)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -440,9 +440,9 @@ DEPENDENCIES
   launchy
   machinist (>= 2.0.0.beta1)
   mechanize
+  mysql2
   nifty-generators
   nokogiri
-  pg
   rails (= 3.0.3)
   rails3-generators
   random_data

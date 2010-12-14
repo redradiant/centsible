@@ -73,10 +73,10 @@
   g.fixture_replacement "machinist"
 end
 
-initializer "load_custom_application_configuration", :after => :disable_dependency_loading do |a|
-Appconf.loadme!
-batch_load('lib/autoload/**/*.rb')
-      end
+#initializer "load_custom_application_configuration", :after => :disable_dependency_loading do |a|
+#Appconf.loadme!
+#batch_load('lib/autoload/**/*.rb')
+#      end
 
     end
   end
