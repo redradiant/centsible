@@ -7,7 +7,7 @@ end
 
 gem 'rails', '3.0.3'
 gem 'isolate-scenarios'
-gem 'pg'
+gem 'mysql2'
 #gem 'paperclip'
 gem 'colored'
 gem 'term-ansicolor', :require => 'term/ansicolor'
@@ -41,7 +41,7 @@ gem 'spree_email_to_friend', :git => 'https://github.com/calas/spree-email-to-fr
 
 gem "i18n"
 gem "globalize3"
-gem "globalize_spree", :git => 'https://tomash@github.com/tomash/globalize-spree.git'
+gem "globalize_spree", :git => 'https://github.com/tomash/globalize-spree.git'
   gem 'has_scope'
   gem 'suppress_validations', :git => 'git@github.com:redradiant/suppress_validations.git'
   gem "default_value_for"

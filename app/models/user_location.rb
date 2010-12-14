@@ -1,7 +1,7 @@
 class UserLocation < ActiveRecord::Base
 
-  belongs_to :location
-  acts_as_mappable :through => :location
+  has_one :location, :as => :locatable
+  #acts_as_mappable :through => :location
 
   belongs_to :user
 end

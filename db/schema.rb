@@ -397,17 +397,6 @@ ActiveRecord::Schema.define(:version => 20101210135511) do
   add_index "product_scopes", ["name"], :name => "index_product_scopes_on_name"
   add_index "product_scopes", ["product_group_id"], :name => "index_product_scopes_on_product_group_id"
 
-  create_table "product_translations", :force => true do |t|
-    t.integer  "product_id"
-    t.string   "locale"
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "product_translations", ["product_id"], :name => "index_product_translations_on_product_id"
-
   create_table "products", :force => true do |t|
     t.string   "name",                 :default => "", :null => false
     t.text     "description"
@@ -577,16 +566,6 @@ ActiveRecord::Schema.define(:version => 20101210135511) do
     t.datetime "updated_at"
     t.integer  "tax_category_id"
   end
-
-  create_table "taxon_translations", :force => true do |t|
-    t.integer  "taxon_id"
-    t.string   "locale"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "taxon_translations", ["taxon_id"], :name => "index_taxon_translations_on_taxon_id"
 
   create_table "taxonomies", :force => true do |t|
     t.string   "name",       :null => false

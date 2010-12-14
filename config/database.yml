@@ -1,22 +1,20 @@
 login: &login
-  adapter: postgresql
-  username: pennyrace
-  password: businesstime
-  host: 173.255.221.95
-  port: 5432
-  encoding: SQL_ASCII
+  adapter: mysql2
+  username: root
+  password: risingsun
+  encoding: utf8
 
 development:
   <<: *login
-  database: pennyrace_d
+  database: pr_d
 
 test: &test
   <<: *login
-  database: pennyrace_t
+  database: pr_t
 
 production:
   <<: *login
-  database: pennyrace_p
+  database: pr_p
 
 cucumber:
   <<: *test
